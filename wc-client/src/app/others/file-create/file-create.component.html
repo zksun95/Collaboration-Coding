@@ -1,0 +1,31 @@
+<div class="container">
+<div class="col-md-8 col-xs-12 mx-auto">
+  <form>
+    <div class="form-group">
+      <label for="fileName">File Name</label>
+      <input type="text" class="form-control" id="fileName" name="fileName" 
+      required placeholder="Enter a file name" [(ngModel)]="newFile.name">
+    </div>
+    <div class="form-group">
+      <label for="fileDescription">Description</label> 
+      <textarea class="form-control" id="fileDescription" name="fileDescription" 
+      required placeholder="Something about your file." [(ngModel)]="newFile.description"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="fileAuth">Auth</label> 
+      <select class="form-control" id="fileAuth" name="fileAuth" [(ngModel)]="newFile.auth">
+        <option *ngFor="let auth of auths" [value]="auth">
+          {{auth}}
+        </option>
+      </select>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary pull-right" (click)="createFile()">
+          Create a file
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+</div>>

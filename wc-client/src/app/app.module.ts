@@ -8,12 +8,18 @@ import { FileDisplayComponent } from './others/file-display/file-display.compone
 import { FileDetailComponent } from './others/file-detail/file-detail.component';
 
 import { routing } from './app.routes';
+import { FileCreateComponent } from './others/file-create/file-create.component';
+import { NavBarComponent } from './others/nav-bar/nav-bar.component';
+import { FooterComponent } from './others/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FileDisplayComponent,
-    FileDetailComponent
+    FileDetailComponent,
+    FileCreateComponent,
+    NavBarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
