@@ -6,6 +6,7 @@
 
 # dependencies
 /wc-client/node_modules
+node_modules/
 
 # IDEs and editors
 /.idea
