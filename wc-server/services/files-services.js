@@ -4,27 +4,46 @@ var files =[
     {id:3,name:"third file",owner:"3rd user",description:"the third test file?",auth:"public"}
   ];
 
+var FileModel = require("../data/fileModel");
+
 var getFiles = function(){
     return new Promise((resolve, reject) => {
-        resolve(files);
+        FileModel.find({}, function(err, files){
+            if(err){
+                reject(err);
+            }else{
+                resolve(files);
+            }
+        });
     });
 }
 
 var getFile = function(id){
     return new Promise((resolve, reject) => {
-        resolve(files.find(file => file.id===id));
+        FileModel.findOne({id: id}, function(err, file){
+            if(err){
+                reject(err);
+            }else{
+                resolve(file);
+            }
+        });
     });
 }
 
 var createFile = function(newFile){
     return new Promise((resolve, reject) => {
-        if(files.find(file => file.name === newFile.name)){
-            reject("name in use");
-        }else{
-            newFile.id = files.length+1;
-            files.push(newFile);
-            resolve(newFile);
-        }
+        FileModel.findOne({name: newFile.name}, function(err, file){
+            if(file){
+                reject("Name already used.");
+            }else{
+                FileModel.count({}, function(err, num){
+                    newFile.id=num+1;
+                    var temp = new FileModel(newFile);
+                    temp.save();
+                    resolve(newFile);
+                })
+            }
+        })
     });
 }
 
