@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { File } from '../../types/file.type'
+import { Subscription } from 'rxjs';
 
 const FILES: File[] =[
   {id:1,name:"fisrt file",owner:"first user",description:"the first test file?",auth:"public"},
@@ -32,12 +33,17 @@ const FILES: File[] =[
 })
 export class FileDisplayComponent implements OnInit {
 
-  files : File[];
+  files : File[] = [];
+  sub: Subscription;
 
-  constructor() { }
+  constructor(@Inject("filesInfo") private filesInfo) { }
 
   ngOnInit() {
-    this.files = FILES;
+    this.getFiles();
+  }
+
+  getFiles(): void {
+    this.sub = this.filesInfo.getFiles().subscribe(files=> this.files = files);
   }
 
 }

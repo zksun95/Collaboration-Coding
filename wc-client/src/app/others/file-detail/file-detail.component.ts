@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-file-detail',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FileDetailComponent implements OnInit {
 
-  constructor() { }
+  file: File;
+
+  constructor(
+    private route: ActivatedRoute,
+    @Inject("filesInfo") private filesInfo
+  ) { }
 
   ngOnInit() {
+    this.route.params.subscribe(params =>{
+      console.log(params);
+      this.filesInfo.getFile(+params["id"]).then(file => this.file = file);
+    });
   }
 
 }

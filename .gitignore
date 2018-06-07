@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/compiled
 
 # dependencies
 /wc-client/node_modules

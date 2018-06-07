@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { FileDisplayComponent } from './others/file-display/file-display.component';
 import { FileDetailComponent } from './others/file-detail/file-detail.component';
 
+import { FilesService } from './services/files.service';
+
 import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
 import { NavBarComponent } from './others/nav-bar/nav-bar.component';
@@ -27,7 +29,12 @@ import { FooterComponent } from './others/footer/footer.component';
     HttpModule,
     routing
   ],
-  providers: [],
+  providers: [
+    {
+      provide: "filesInfo",
+      useClass: FilesService
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

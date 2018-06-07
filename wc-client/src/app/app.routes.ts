@@ -6,20 +6,20 @@ import { FileDetailComponent } from './others/file-detail/file-detail.component'
 const routes: Routes = [
     {
         path: "",
-        redirectTo: "file",
+        redirectTo: "files",
         pathMatch: "full",
     },
     {
-        path: "file",
+        path: "files",
         component: FileDisplayComponent,
     },
     {
-        path: "file/:id",
+        path: "files/:id",
         component: FileDetailComponent,
     },
     {
         path: "**",
-        redirectTo: "file",
+        redirectTo: "files",
     }
 ];
 

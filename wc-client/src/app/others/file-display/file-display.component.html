@@ -14,7 +14,7 @@
         <tbody>
             <tr *ngFor="let file of files">
                 <th scope="row">{{file.id}}</th>
-                <td><a [routerLink]="['/file',file.id]">{{file.name}}</a></td>
+                <td><a [routerLink]="['/files',file.id]">{{file.name}}</a></td>
                 <td>{{file.owner}}</td>
                 <td>{{file.auth}}</td>
             </tr>
