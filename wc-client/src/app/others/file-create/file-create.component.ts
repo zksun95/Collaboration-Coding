@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { File } from '../../types/file.type'
+//import { FileDisplayComponent } from '../file-display/file-display.component';
 
 const EMPTY_FILE: File = Object.freeze({
   id: 0,
@@ -28,9 +29,15 @@ export class FileCreateComponent implements OnInit {
 
   newFile: File = Object.assign({}, EMPTY_FILE)
 
-  constructor() { }
+  constructor(@Inject("filesInfo") private filesInfo) { }
 
   ngOnInit() {
+  }
+
+  createFile(): void{
+    console.log("try create");
+    this.filesInfo.createFile(this.newFile).subscribe(()=>{console.log("123");this.filesInfo.getFiles();});
+    
   }
 
 }

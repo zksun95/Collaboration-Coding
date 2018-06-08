@@ -18,7 +18,7 @@ export class FileDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params =>{
       console.log(params);
-      this.filesInfo.getFile(+params["id"]).then(file => this.file = file);
+      this.filesInfo.getFile(+params["id"]).subscribe(file => this.file=file);//then(file => this.file = file);
     });
   }
 

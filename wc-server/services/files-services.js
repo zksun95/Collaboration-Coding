@@ -7,6 +7,7 @@ var files =[
 var FileModel = require("../data/fileModel");
 
 var getFiles = function(){
+    console.log("try get all");
     return new Promise((resolve, reject) => {
         FileModel.find({}, function(err, files){
             if(err){
