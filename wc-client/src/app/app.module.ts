@@ -9,6 +9,7 @@ import { FileDisplayComponent } from './others/file-display/file-display.compone
 import { FileDetailComponent } from './others/file-detail/file-detail.component';
 
 import { FilesService } from './services/files.service';
+import { AuthService } from './services/auth.service';
 
 import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
@@ -35,6 +36,10 @@ import { FooterComponent } from './others/footer/footer.component';
     {
       provide: "filesInfo",
       useClass: FilesService
+    },
+    {
+      provide: "auth",
+      useClass: AuthService
     }
   ],
   bootstrap: [AppComponent]

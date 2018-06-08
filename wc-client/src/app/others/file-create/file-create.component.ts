@@ -27,7 +27,7 @@ export class FileCreateComponent implements OnInit {
     "Public Read Only"
   ];
 
-  newFile: File = Object.assign({}, EMPTY_FILE)
+  newFile: File = Object.assign({}, EMPTY_FILE);
 
   constructor(@Inject("filesInfo") private filesInfo) { }
 
@@ -36,7 +36,10 @@ export class FileCreateComponent implements OnInit {
 
   createFile(): void{
     console.log("try create");
-    this.filesInfo.createFile(this.newFile).subscribe(()=>{console.log("123");this.filesInfo.getFiles();});
+    this.filesInfo.createFile(this.newFile).subscribe(() => {
+      this.newFile = Object.assign({}, EMPTY_FILE);
+      alert("created!");
+    });
     
   }
 

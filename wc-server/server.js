@@ -11,6 +11,10 @@ app.use('/', pageRouter);
 app.use(express.static(path.join(__dirname, "../compiled")));
 app.use("/api/v1", restRouter);
 
+app.use(function(req, res){
+    res.sendFile("index.html", {root: path.join(__dirname, '../compiled/')});
+});
+
 app.listen(3000, function(){
     console.log('listen to 3000')
 })

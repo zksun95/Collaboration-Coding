@@ -1,6 +1,9 @@
 <div class="container">
     <h1 class="align-content-center">Your all files</h1>
 </div>
+<div class = "container">
+    <button class="btn btn-outline-success my-2 mx-auto" [routerLink]="['/files/create']">Create new file</button>
+</div>
 <div class="container">
     <table class="table table-hover table-striped">
         <thead class="thead-light">
@@ -14,7 +17,7 @@
         <tbody>
             <tr *ngFor="let file of files">
                 <th scope="row">{{file.id}}</th>
-                <td><a [routerLink]="['/files',file.id]">{{file.name}}</a></td>
+                <td><a [routerLink]="['/files/detail',file.id]">{{file.name}}</a></td>
                 <td>{{file.owner}}</td>
                 <td>{{file.auth}}</td>
             </tr>

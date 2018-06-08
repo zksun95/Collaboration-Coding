@@ -2,6 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { FileDisplayComponent } from './others/file-display/file-display.component';
 import { FileDetailComponent } from './others/file-detail/file-detail.component';
+import { FileCreateComponent } from './others/file-create/file-create.component';
 
 const routes: Routes = [
     {
@@ -14,8 +15,12 @@ const routes: Routes = [
         component: FileDisplayComponent,
     },
     {
-        path: "files/:id",
+        path: "files/detail/:id",
         component: FileDetailComponent,
+    },
+    {
+        path: "files/create",
+        component: FileCreateComponent
     },
     {
         path: "**",

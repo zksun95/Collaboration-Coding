@@ -5,7 +5,7 @@ var path = require("path");
 var fileServices = require("../services/files-services");
 
 
-router.get("/", function(req, res){
+router.get(["/", "/files"], function(req, res){
     res.sendFile("index.html", {root: path.join(__dirname, '../../compiled/')});
 });
 
