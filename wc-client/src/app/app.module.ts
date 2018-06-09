@@ -15,6 +15,7 @@ import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
 import { NavBarComponent } from './others/nav-bar/nav-bar.component';
 import { FooterComponent } from './others/footer/footer.component';
+import { ProfileInComponent } from './others/nav-bar/profile-in/profile-in.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FooterComponent } from './others/footer/footer.component';
     FileDetailComponent,
     FileCreateComponent,
     NavBarComponent,
-    FooterComponent
+    FooterComponent,
+    ProfileInComponent
   ],
   imports: [
     BrowserModule,

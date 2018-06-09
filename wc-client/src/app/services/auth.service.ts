@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import { resolve } from 'url';
+import { reject } from 'q';
 
 (window as any).global = window;
 
@@ -24,9 +26,10 @@ export class AuthService {
 
   constructor(public router: Router) {}
 
-  public login(): void {
-    this.auth0.authorize();
-    console.log("in");
+  public login(): Promise<Object> {
+    return new Promise((resolve, reject)=>{
+      this.auth0.authorize();
+    })
   }
 
   public handleAuthentication(): void {
@@ -56,6 +59,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('profile');
     // Go back to the home route
     //this.router.navigate(['/']);
   }

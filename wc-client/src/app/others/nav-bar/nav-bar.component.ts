@@ -7,23 +7,36 @@ import { Component, OnInit, Inject } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
 
+  username = "";
+  logged = false;
+
   constructor(@Inject("auth") private auth) {
     this.auth.handleAuthentication();
   }
 
   ngOnInit() {
-    if(this.auth.userProfile){
-      console.log("have");
+    if(this.auth.isAuthenticated()){
+      console.log("in");
+      //this.logged = true;
+      this.auth.getProfile((err, profile) => {
+        //this.profile = profile;
+        localStorage.setItem("profile", JSON.stringify(profile));
+        this.username = profile.nickname;
+      });
     }else{
-      console.log("not");
+      //this.logged = false;
+      console.log("out");
     }
   }
 
   signIn(): void{
-    this.auth.login();
-    this.auth.getProfile((err, profile) => {
-      //this.profile = profile;
-      localStorage.setItem("profile", JSON.stringify(profile));
+    this.auth.login().then(()=>{
+      this.logged = true;
+      this.auth.getProfile((err, profile) => {
+        //this.profile = profile;
+        localStorage.setItem("profile", JSON.stringify(profile));
+        this.username = profile.nickname;
+      });
     });
   }
 
