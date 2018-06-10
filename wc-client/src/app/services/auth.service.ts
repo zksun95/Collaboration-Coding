@@ -26,10 +26,19 @@ export class AuthService {
 
   constructor(public router: Router) {}
 
-  public login(): Promise<Object> {
-    return new Promise((resolve, reject)=>{
-      this.auth0.authorize();
-    })
+  public login() {
+      return new Promise((resolve, reject)=>{
+        this.auth0.authorize(()=>{
+          console.log("1");
+          //this.handleAuthentication();
+          this.getProfile((err, profile) => {
+            console.log("2");
+            localStorage.setItem("profile", JSON.stringify(profile));
+            resolve();
+          });
+        });
+      });
+      
   }
 
   public handleAuthentication(): void {
@@ -51,6 +60,12 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.getProfile((err, profile) => {
+      localStorage.setItem("profile", JSON.stringify(profile));
+      //this.username = profile.nickname;
+      //console.log(this.logged);
+      //console.log(this.username);
+    });
   }
 
   public logout(): void {
@@ -65,8 +80,6 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    // Check whether the current time is past the
-    // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at') || '{}');
     return new Date().getTime() < expiresAt;
   }

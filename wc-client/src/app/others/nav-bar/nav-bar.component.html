@@ -23,12 +23,12 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
 
-        <form class="form-inline my-2 mr-2 my-lg-0" *ngIf="!logged">
+        <form class="form-inline my-2 mr-2 my-lg-0" *ngIf="!auth.isAuthenticated()">
           <button class="btn btn-success my-2 my-sm-0" type="submit" (click)="signIn()">Sign In</button>
         </form>
 
-        <ul class="navbar-nav navbar-right" *ngIf="logged" >
-          <li class="nav-item dropdown">
+        <ul class="navbar-nav navbar-right" *ngIf="auth.isAuthenticated()" >
+          <li class="nav-item dropdown" ng-init="console.log(1);updateProfile();">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{username}}
               </a>

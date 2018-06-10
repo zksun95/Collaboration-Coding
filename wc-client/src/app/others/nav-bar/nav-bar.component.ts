@@ -1,4 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { retry } from 'rxjs/operators';
+import { VariableAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,43 +10,44 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class NavBarComponent implements OnInit {
 
   username = "";
-  logged = false;
-
+  profile: any;
+  
   constructor(@Inject("auth") private auth) {
     this.auth.handleAuthentication();
   }
 
+  ngAfterContentChecked(){
+    if(localStorage.getItem('profile')){
+      this.username = JSON.parse(localStorage.getItem('profile')).nickname;
+    } 
+  }
+
+  d = new Date();
+
   ngOnInit() {
-    if(this.auth.isAuthenticated()){
-      console.log("in");
-      //this.logged = true;
-      this.auth.getProfile((err, profile) => {
-        //this.profile = profile;
-        localStorage.setItem("profile", JSON.stringify(profile));
-        this.username = profile.nickname;
-      });
-    }else{
-      //this.logged = false;
-      console.log("out");
-    }
+    console.log(this.d.getTime());
+    // if(this.auth.isAuthenticated()){
+    //   this.updateProfile();
+    // }
+    // this.username = JSON.parse(localStorage.getItem('access_token')).nickname;
   }
 
   signIn(): void{
-    this.auth.login().then(()=>{
-      this.logged = true;
-      this.auth.getProfile((err, profile) => {
-        //this.profile = profile;
-        localStorage.setItem("profile", JSON.stringify(profile));
-        this.username = profile.nickname;
-      });
-    });
+    console.log("test-signin");
+    this.auth.login();
   }
 
   signOut(): void{
     this.auth.logout(); 
   }
 
-  isAuthed(): any{
-    return this.auth.isAuthenticated();
+  updateProfile(): any{
+    console.log("try");
+    this.auth.getProfile((err, profile) => {
+      this.profile = profile;
+      console.log(profile);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      this.username = profile.nickname;
+    });
   }
 }
