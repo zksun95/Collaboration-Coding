@@ -7,6 +7,7 @@ import { reject } from 'q';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
+import Auth0Lock from 'auth0-lock';
 
 (window as any).global = window;
 
@@ -26,6 +27,8 @@ export class AuthService {
   });
 
   userProfile: any;
+  
+  lock = new Auth0Lock('O228e5ilo3JZXHQKSfYRmi6VvwQXCsC9', 'zksun.auth0.com');
 
   constructor(public router: Router, private http: HttpClient) {}
 
@@ -121,6 +124,15 @@ export class AuthService {
     //   return res.json();
     // }).catch(this.handleError);
     return this.http.post('https://zksun.auth0.com/dbconnections/change_password', profile, httpOptions);
+  }
+  
+  public getMoreProfile(): any{
+    console.log("more profiles");
+    this.lock.getUserInfo(localStorage.getItem("accessToken"), function(error, profile) {
+      if (!error) {
+        console.log(profile);
+      }
+    });
   }
 
 }

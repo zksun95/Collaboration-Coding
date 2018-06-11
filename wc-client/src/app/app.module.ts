@@ -18,6 +18,7 @@ import { NavBarComponent } from './others/nav-bar/nav-bar.component';
 import { FooterComponent } from './others/footer/footer.component';
 import { ProfileInComponent } from './others/nav-bar/profile-in/profile-in.component';
 import { ProfileComponent } from './others/profile/profile.component';
+import { EditorComponent } from './others/editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ProfileComponent } from './others/profile/profile.component';
     NavBarComponent,
     FooterComponent,
     ProfileInComponent,
-    ProfileComponent
+    ProfileComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,

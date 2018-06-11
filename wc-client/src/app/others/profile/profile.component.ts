@@ -18,6 +18,7 @@ export class ProfileComponent implements OnInit {
     //if(this.auth.isAuthenticated()){
     this.username=JSON.parse(localStorage.getItem("profile")).nickname;
     this.email=JSON.parse(localStorage.getItem("profile")).name;
+    //this.auth.getMoreProfile();
     // }else{
     //   //this.router.navigate(['/files']);
     // }
