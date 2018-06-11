@@ -22,10 +22,10 @@ export class NavBarComponent implements OnInit {
     } 
   }
 
-  d = new Date();
+  //d = new Date();
 
   ngOnInit() {
-    console.log(this.d.getTime());
+    // console.log(this.d.getTime());
     // if(this.auth.isAuthenticated()){
     //   this.updateProfile();
     // }
@@ -33,7 +33,6 @@ export class NavBarComponent implements OnInit {
   }
 
   signIn(): void{
-    console.log("test-signin");
     this.auth.login();
   }
 
@@ -42,7 +41,7 @@ export class NavBarComponent implements OnInit {
   }
 
   updateProfile(): any{
-    console.log("try");
+    //console.log("try");
     this.auth.getProfile((err, profile) => {
       this.profile = profile;
       console.log(profile);

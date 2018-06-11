@@ -17,8 +17,6 @@ export class FilesService {
 
   private filesSource = new BehaviorSubject<File[]>([]);
 
-  
-
   constructor(private http: HttpClient) { }
 
   getFiles(): Observable<File[]>

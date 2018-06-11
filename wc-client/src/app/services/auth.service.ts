@@ -4,6 +4,9 @@ import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
 import { resolve } from 'url';
 import { reject } from 'q';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http'
+import { Observable } from 'rxjs';
 
 (window as any).global = window;
 
@@ -24,7 +27,7 @@ export class AuthService {
 
   userProfile: any;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private http: HttpClient) {}
 
   public login() {
       return new Promise((resolve, reject)=>{
@@ -97,6 +100,27 @@ export class AuthService {
       }
       cb(err, profile);
     });
+  }
+
+  public changePass(): Observable<Object>{
+    console.log("change");
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+
+    let profile = {
+                client_id: "O228e5ilo3JZXHQKSfYRmi6VvwQXCsC9",
+                email: JSON.parse(localStorage.getItem("profile")).name,
+                connection: "Username-Password-Authentication"
+              };
+    console.log(profile);
+    // return this.http.post('api/v1/files', file, httpOptions).toPromise().then((res: Response) => {
+    //   this.getFiles();
+    //   return res.json();
+    // }).catch(this.handleError);
+    return this.http.post('https://zksun.auth0.com/dbconnections/change_password', profile, httpOptions);
   }
 
 }
