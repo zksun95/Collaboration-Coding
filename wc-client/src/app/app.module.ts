@@ -11,6 +11,7 @@ import { FileDetailComponent } from './others/file-detail/file-detail.component'
 import { FilesService } from './services/files.service';
 import { AuthService } from './services/auth.service';
 import { UserAccessService } from './services/user-access.service';
+import { CollaborationService } from './services/collaboration.service';
 
 import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
@@ -51,6 +52,10 @@ import { EditorComponent } from './others/editor/editor.component';
     {
       provide: "userAccess",
       useClass: UserAccessService
+    },
+    {
+      provide: "collaboration",
+      useClass: CollaborationService
     }
   ],
   bootstrap: [AppComponent]
