@@ -26,9 +26,18 @@ export class CollaborationService {
       editor.getSession().getDocument().applyDeltas([change]);
     })
 
+    // this.collaboration_socket.on("currentUsers", (users: string)=>{
+    //   console.log("users: " + users);
+    //   // change = JSON.parse(change);
+    //   // editor.lastAppliedChange = change;
+    //   // editor.getSession().getDocument().applyDeltas([change]);
+    // })
+
     this.collaboration_socket.on("changeCursor", (cursor: string)=>{
       console.log("cursor: " + cursor);
       let session = editor.getSession();
+
+      //let colors = COLORS; //using pop and push to manage the colors, have to get the css color after dis connect and push it back;
 
       cursor = JSON.parse(cursor);
       let x = cursor['row'];
@@ -44,15 +53,29 @@ export class CollaborationService {
 
         let css = document.createElement("style");
         css.type = "text/css";
-        css.innerHTML = ".editor_cursor_"+cursorId+""
+        css.innerHTML = ".editor_cursor_"+cursorId+
                         "{position: absolute; background:"+COLORS[this.cursorNum]+";"+
                         "z-index: 100; width:3px !important;}";
         document.body.appendChild(css);
         this.cursorNum++;
       }
+      
+      //test!!
+      console.log(this.userCursors);
+
       let Range = ace.require("ace/range").Range;
-      let newMarker = session.addMarker(new Range(x, y, x, y+1), "editor_cursor"+cursorId, true);
+      let newMarker = session.addMarker(new Range(x, y, x, y+1), "editor_cursor_"+cursorId, true);
       this.userCursors[cursorId]['marker'] = newMarker;
+    });
+
+    this.collaboration_socket.on("deleteCursor", (sid: string)=>{
+      console.log("delete: " + sid);
+      console.log(this.userCursors);
+      console.log(this.userCursors[sid]);
+      editor.getSession().removeMarker(this.userCursors[sid]['marker']);
+      // change = JSON.parse(change);
+      // editor.lastAppliedChange = change;
+      // editor.getSession().getDocument().applyDeltas([change]);
     })
   }
 
@@ -61,7 +84,12 @@ export class CollaborationService {
   }
   
   changeCursor(cursor: string): void{
-    console.log("emitted cursor");
+    //console.log("emitted cursor");
     this.collaboration_socket.emit("changeCursor", cursor);
+  }
+
+  loadCode(): void{
+    console.log("start to load code...");
+    this.collaboration_socket.emit("loadCode");
   }
 }

@@ -49,6 +49,8 @@ export class EditorComponent implements OnInit {
       console.log('cursor: '+JSON.stringify(cursor));
       this.collaboration.changeCursor(JSON.stringify(cursor));
     });
+
+    this.collaboration.loadCode();
   }
 
 }
