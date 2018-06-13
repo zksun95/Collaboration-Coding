@@ -5,7 +5,6 @@ var pageRouter = require("./routes/page");
 var mongoose = require("mongoose");
 var path = require("path");
 var http = require("http");
-
 var socket_io = require("socket.io");
 var io = socket_io();
 var editor_socket = require("./services/socket-service.js")(io);

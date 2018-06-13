@@ -42,13 +42,14 @@ export class CollaborationService {
       cursor = JSON.parse(cursor);
       let x = cursor['row'];
       let y = cursor['column'];
-      let cursorId = cursor["socketId"];
+      let cursorId = cursor["cursorId"];
+      //console.log(cursorId);
 
       if(cursorId in this.userCursors){
-        console.log("try remove");
+        //console.log("try remove");
         session.removeMarker(this.userCursors[cursorId]['marker']);
       }else{
-        console.log("try add");
+        //console.log("try add");
         this.userCursors[cursorId] = {};
 
         let css = document.createElement("style");
@@ -59,9 +60,6 @@ export class CollaborationService {
         document.body.appendChild(css);
         this.cursorNum++;
       }
-      
-      //test!!
-      console.log(this.userCursors);
 
       let Range = ace.require("ace/range").Range;
       let newMarker = session.addMarker(new Range(x, y, x, y+1), "editor_cursor_"+cursorId, true);
@@ -69,9 +67,9 @@ export class CollaborationService {
     });
 
     this.collaboration_socket.on("deleteCursor", (sid: string)=>{
-      console.log("delete: " + sid);
-      console.log(this.userCursors);
-      console.log(this.userCursors[sid]);
+      // console.log("delete: " + sid);
+      // console.log(this.userCursors);
+      // console.log(this.userCursors[sid]);
       editor.getSession().removeMarker(this.userCursors[sid]['marker']);
       // change = JSON.parse(change);
       // editor.lastAppliedChange = change;
@@ -89,7 +87,7 @@ export class CollaborationService {
   }
 
   loadCode(): void{
-    console.log("start to load code...");
+    console.log("Loading code...");
     this.collaboration_socket.emit("loadCode");
   }
 }
