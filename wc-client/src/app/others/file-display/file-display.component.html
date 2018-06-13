@@ -15,7 +15,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let file of files">
+            <tr *ngFor="let file of files | searchBox: keyword">
                 <th scope="row">{{file.id}}</th>
                 <td><a [routerLink]="['/files/detail',file.id]">{{file.name}}</a></td>
                 <td>{{file.owner}}</td>

@@ -1,6 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { retry } from 'rxjs/operators';
 import { VariableAst } from '@angular/compiler';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,8 +14,13 @@ export class NavBarComponent implements OnInit {
 
   username = "";
   profile: any;
+  sub: Subscription;
+
+  searchBox: FormControl = new FormControl();
   
-  constructor(@Inject("auth") private auth) {
+  constructor(@Inject("auth") private auth,
+              @Inject("keywords") private keywords,
+              private router: Router) {
     this.auth.handleAuthentication();
   }
 
@@ -25,11 +33,18 @@ export class NavBarComponent implements OnInit {
   //d = new Date();
 
   ngOnInit() {
+    this.sub = this.searchBox.valueChanges.subscribe(keyword=>this.keywords.setKeywords(keyword));
     // console.log(this.d.getTime());
     // if(this.auth.isAuthenticated()){
     //   this.updateProfile();
     // }
     // this.username = JSON.parse(localStorage.getItem('access_token')).nickname;
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.sub.unsubscribe();
   }
 
   signIn(): void{
@@ -48,5 +63,9 @@ export class NavBarComponent implements OnInit {
       localStorage.setItem("profile", JSON.stringify(profile));
       this.username = profile.nickname;
     });
+  }
+
+  search(){
+    this.router.navigate(["/files"]);
   }
 }

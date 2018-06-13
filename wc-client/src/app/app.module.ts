@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,6 +13,7 @@ import { FilesService } from './services/files.service';
 import { AuthService } from './services/auth.service';
 import { UserAccessService } from './services/user-access.service';
 import { CollaborationService } from './services/collaboration.service';
+import { KeywordsService } from './services/keywords.service';
 
 import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
@@ -20,6 +22,7 @@ import { FooterComponent } from './others/footer/footer.component';
 import { ProfileInComponent } from './others/nav-bar/profile-in/profile-in.component';
 import { ProfileComponent } from './others/profile/profile.component';
 import { EditorComponent } from './others/editor/editor.component';
+import { SearchBoxPipe } from './pipes/search-box.pipe';
 
 @NgModule({
   declarations: [
@@ -31,11 +34,13 @@ import { EditorComponent } from './others/editor/editor.component';
     FooterComponent,
     ProfileInComponent,
     ProfileComponent,
-    EditorComponent
+    EditorComponent,
+    SearchBoxPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     routing,
     HttpClientModule
@@ -56,6 +61,10 @@ import { EditorComponent } from './others/editor/editor.component';
     {
       provide: "collaboration",
       useClass: CollaborationService
+    },
+    {
+      provide: "keywords",
+      useClass: KeywordsService
     }
   ],
   bootstrap: [AppComponent]

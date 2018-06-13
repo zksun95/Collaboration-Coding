@@ -114,7 +114,7 @@ module.exports = function(io) {
                 var index = collaborations[sessionId]['participants'].indexOf(socket.id);
                 if (index > -1) {
                     collaborations[sessionId]['participants'].splice(index, 1);
-                    if(participants.length == 0){
+                    if(collaborations[sessionId]['participants'].length == 0){
                         console.log("Last user disconnected");
                         let key = makeSessionKey(sessionId);
                         let value = JSON.stringify(collaborations[sessionId]['cache']);

@@ -35,15 +35,25 @@ export class FileDisplayComponent implements OnInit {
 
   files : File[] = [];
   sub: Subscription;
+  keySub: Subscription;
 
-  constructor(@Inject("filesInfo") private filesInfo) { }
+  keyword: string = "";
+
+  constructor(@Inject("filesInfo") private filesInfo,
+              @Inject("keywords") private keywords) { }
 
   ngOnInit() {
     this.getFiles();
+    this.getKeywords();
   }
 
   getFiles(): void {
     this.sub = this.filesInfo.getFiles().subscribe(files=> this.files = files);
+  }
+
+  getKeywords(): void{
+    this.keySub = this.keywords.getKeywords()
+                      .subscribe(key=>this.keyword=key);
   }
 
 }
