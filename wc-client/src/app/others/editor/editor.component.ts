@@ -61,9 +61,11 @@ export class EditorComponent implements OnInit {
     let code = this.editor.getValue();
     let data = {
       "code": code,
-      "language": "java"
+      "language": "python"
     }
-    this.runTest.buildAndRun(data).subscribe(res=>this.result=res);
+
+    //console.log()
+    this.runTest.buildAndRun(data).subscribe(res=>this.result=res["text"]);
   }
 
 }

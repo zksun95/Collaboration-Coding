@@ -57,11 +57,11 @@ def build_run(code, language):
         "run": None
     }
     code_pos = uuid.uuid4()
-    code_dir = "%s\\%s" % (BUILD_DIR, code_pos)
+    code_dir = "%s/%s" % (BUILD_DIR, code_pos)
     code_dir_docker = "/tmp_run/%s" % (code_pos)
     make_dir(code_dir)
 
-    with open("%s\\%s" % (code_dir, FILE_NAMES[language]), 'w') as source_code:
+    with open("%s/%s" % (code_dir, FILE_NAMES[language]), 'w') as source_code:
         source_code.write(code)
 
     try:
@@ -75,7 +75,7 @@ def build_run(code, language):
         res["build"] = "OK"
     except ContainerError as e:
         print ("Build failed.")
-        res["build"] = e.stderr
+        res["build"] = str(e.stderr, 'utf-8')
         shutil.rmtree(code_dir)
         return res
 
@@ -91,7 +91,7 @@ def build_run(code, language):
         res["run"] = str(log, 'utf-8')
     except ContainerError as e:
         print ("Execution failed.")
-        res["run"] = e.stderr
+        res["run"] = str(e.stderr, 'utf-8')#e.stderr
         shutil.rmtree(code_dir)
         return res
 
