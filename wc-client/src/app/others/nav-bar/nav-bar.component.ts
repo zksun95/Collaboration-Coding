@@ -4,6 +4,10 @@ import { retry } from 'rxjs/operators';
 import { VariableAst } from '@angular/compiler';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+//import 'rxjs/add/operator/debounceTime'
+import { debounceTime } from 'rxjs/operators' 
+//import { debounceTime, map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -33,7 +37,14 @@ export class NavBarComponent implements OnInit {
   //d = new Date();
 
   ngOnInit() {
-    this.sub = this.searchBox.valueChanges.subscribe(keyword=>this.keywords.setKeywords(keyword));
+    this.sub = this.searchBox
+                    .valueChanges
+                    .pipe(
+                      debounceTime(1000)
+                    )
+                    .subscribe(keyword=>this.keywords.setKeywords(keyword));
+                    // .debounceTime(250)
+                    // .subscribe(keyword=>this.keywords.setKeywords(keyword));
     // console.log(this.d.getTime());
     // if(this.auth.isAuthenticated()){
     //   this.updateProfile();

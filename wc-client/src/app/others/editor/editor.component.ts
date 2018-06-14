@@ -15,7 +15,10 @@ export class EditorComponent implements OnInit {
 
   sessionId: any;
 
+  result: string = "";
+
   constructor(@Inject("collaboration") private collaboration,
+              @Inject("buildAndRun") private runTest,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -51,6 +54,16 @@ export class EditorComponent implements OnInit {
     });
 
     this.collaboration.loadCode();
+  }
+
+  test(): void{
+    console.log("uploading codes");
+    let code = this.editor.getValue();
+    let data = {
+      "code": code,
+      "language": "java"
+    }
+    this.runTest.buildAndRun(data).subscribe(res=>this.result=res);
   }
 
 }

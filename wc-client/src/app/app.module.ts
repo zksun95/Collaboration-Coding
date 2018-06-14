@@ -14,6 +14,7 @@ import { AuthService } from './services/auth.service';
 import { UserAccessService } from './services/user-access.service';
 import { CollaborationService } from './services/collaboration.service';
 import { KeywordsService } from './services/keywords.service';
+import { BuildRunService } from './services/build-run.service';
 
 import { routing } from './app.routes';
 import { FileCreateComponent } from './others/file-create/file-create.component';
@@ -65,6 +66,10 @@ import { SearchBoxPipe } from './pipes/search-box.pipe';
     {
       provide: "keywords",
       useClass: KeywordsService
+    },
+    {
+      provide: "buildAndRun",
+      useClass: BuildRunService
     }
   ],
   bootstrap: [AppComponent]
