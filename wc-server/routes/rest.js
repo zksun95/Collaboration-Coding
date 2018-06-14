@@ -6,8 +6,8 @@ var fileServices = require("../services/files-services");
 var bp = require("body-parser");
 var jp = bp.json();
 
-var node_rest_client = require("node_rest_client").Clinet;
-var rest_client = node_rest_client();
+var Client = require('node-rest-client').Client;
+var rest_client = new Client();
 
 EXECUTOR_URL = "http://localhost:1023/build_and_run";
 rest_client.registerMethod("build_and_run", EXECUTOR_URL, "POST");
@@ -44,7 +44,7 @@ router.post("/build_run", jp, function(req, res){
     rest_client.method.build_and_run(
         {
             "data": {"code":  code, "language": language},
-            "header": {"Content-Type": "application/json"}
+            "headers": {"Content-Type": "application/json"}
         }, (data, res) => {
             console.log(res);
             const text = `Build result: ${data["build"]}

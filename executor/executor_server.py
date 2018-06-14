@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from executor_utils import build_run, load_image
 import json
 
 app = Flask(__name__)
@@ -16,8 +17,13 @@ def build_and_run():
     language = data["language"]
     print(code, language)
 
-    return jsonify({"nothing": "here"})
+    res = build_run(code, language)
+
+    print(res)
+
+    return jsonify(res)
 
 
 if __name__ == "__main__":
+    load_image()
     app.run(debug = True)
