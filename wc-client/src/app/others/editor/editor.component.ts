@@ -15,7 +15,11 @@ export class EditorComponent implements OnInit {
 
   sessionId: any;
 
+  language: string = "Python"
+
   result: string = "";
+  rbuild: string = "";
+  rrun: string = "";
 
   constructor(@Inject("collaboration") private collaboration,
               @Inject("buildAndRun") private runTest,
@@ -57,15 +61,30 @@ export class EditorComponent implements OnInit {
   }
 
   test(): void{
+    this.result = "Testing ..."
+    //this.rbuild = "Testing"
+    this.rrun = "Testing ..."
     console.log("uploading codes");
     let code = this.editor.getValue();
     let data = {
       "code": code,
-      "language": "python"
+      "language": this.language
     }
 
     //console.log()
-    this.runTest.buildAndRun(data).subscribe(res=>this.result=res["text"]);
+    this.runTest.buildAndRun(data).subscribe(res=>{
+      this.result = res["text"];
+      this.rbuild = res["build"];
+      this.rrun = res["run"];
+    });
+  }
+
+  setLanguage(language): void{
+    this.language = language;
+  }
+
+  resetCode(): void{
+    this.editor.value="123";
   }
 
 }
