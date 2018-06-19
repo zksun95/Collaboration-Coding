@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <div class="row col-md-10 mx-auto editor_div">
-    <div id="editor">//code here</div>
+    <div id="editor"></div>
   </div>
 
   <div class="row col-md-10 mx-auto my-4">
@@ -12,8 +12,8 @@
           {{language}}
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" (click)="setLanguage('Python')">Python</a>
-          <a class="dropdown-item" (click)="setLanguage('Java')">Java</a>
+          <a class="dropdown-item" (click)="setLanguage(lang)" *ngFor="let lang of languages">{{lang}}</a>
+          <!-- <a class="dropdown-item" (click)="setLanguage('Java')">Java</a> -->
         </div>
       </div>
       <button type="button" class="btn btn-secondary" (click)="resetCode()">Reset Code</button>

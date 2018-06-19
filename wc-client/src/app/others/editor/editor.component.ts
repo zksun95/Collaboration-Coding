@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { Params, ActivatedRoute } from '@angular/router';
+import { BEGINNINGS, LANGUAGES } from './language';
 
 declare var ace: any;
 
@@ -15,7 +16,8 @@ export class EditorComponent implements OnInit {
 
   sessionId: any;
 
-  language: string = "Python"
+  languages: string[] = LANGUAGES;
+  language: string = "";
 
   result: string = "";
   rbuild: string = "";
@@ -26,6 +28,7 @@ export class EditorComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.language = this.languages[0];
     this.route.params.subscribe(params => {
       this.sessionId = params['id'];
       this.initEditor();
@@ -35,13 +38,16 @@ export class EditorComponent implements OnInit {
   initEditor(){
     this.editor = ace.edit("editor");
     this.editor.setTheme("ace/theme/eclipse");
-    this.editor.getSession().setMode("ace/mode/java");
+    //this.editor.getSession().setMode("ace/mode/"+this.language.toLowerCase());
+    this.resetCode();
     this.editor.$blockScrolling = Infinity;
 
     document.getElementsByTagName('textarea')[0].focus();
 
     this.collaboration.init(this.sessionId, this.editor);
     this.editor.lastAppliedChange = null;
+
+    //this.editor.setValue(BEGINNINGS[this.language]);
 
     this.editor.on('change', (change)=>{
       console.log('some changes: ' + JSON.stringify(change));
@@ -80,11 +86,15 @@ export class EditorComponent implements OnInit {
   }
 
   setLanguage(language): void{
-    this.language = language;
+    if(this.language!=language){
+      this.language = language;
+      this.resetCode();
+    }
   }
 
   resetCode(): void{
-    this.editor.value="123";
+    this.editor.setValue(BEGINNINGS[this.language]);
+    this.editor.getSession().setMode("ace/mode/" + this.language.toLowerCase());
   }
 
 }
